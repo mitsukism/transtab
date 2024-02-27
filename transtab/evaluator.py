@@ -6,7 +6,7 @@ import torch
 import numpy as np
 from sklearn.metrics import roc_auc_score, accuracy_score, mean_squared_error
 
-from . import constants
+import constants
 
 def predict(clf, 
     x_test,
