@@ -574,8 +574,13 @@ class TransTabEncoder(nn.Module):
 class TransTabLinearClassifier(nn.Module):
     def __init__(self,
         num_class,
-        hidden_dim=128) -> None:
+        hidden_dim=512,
+        num_layers=1) -> None:
         super().__init__()
+        self.layers = nn.ModuleList()
+        for _ in range(num_layers):
+            self.layers.append(nn.Linear(hidden_dim, hidden_dim))
+            self.layers.append(nn.ReLU())
         if num_class <= 2:
             self.fc = nn.Linear(hidden_dim, 1)
         else:
@@ -585,6 +590,8 @@ class TransTabLinearClassifier(nn.Module):
     def forward(self, x) -> Tensor:
         x = x[:,0,:] # take the cls token embedding
         x = self.norm(x)
+        for layer in self.layers:
+            x = layer(x)
         logits = self.fc(x)
         return logits
 
