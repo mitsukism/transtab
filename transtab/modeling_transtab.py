@@ -575,7 +575,7 @@ class TransTabLinearClassifier(nn.Module):
     def __init__(self,
         num_class,
         hidden_dim=512,
-        num_layers=1) -> None:
+        num_layers=3) -> None:
         super().__init__()
         self.layers = nn.ModuleList()
         for _ in range(num_layers):
