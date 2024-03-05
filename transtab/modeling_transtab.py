@@ -15,6 +15,7 @@ import numpy as np
 import pandas as pd
 
 import constants
+import numpy as np
 
 class TransTabWordEmbedding(nn.Module):
     r'''
@@ -758,6 +759,9 @@ class TransTabModel(nn.Module):
 
         # get cls token
         final_cls_embedding = encoder_output[:,0,:]
+        # Todo: output cls_token
+        final_cls_embedding_np = final_cls_embedding.detach().cpu().numpy()
+        np.save('path/to/save/final_cls_embedding.npy', final_cls_embedding_np)
         return final_cls_embedding
 
     def load(self, ckpt_dir):
@@ -998,6 +1002,9 @@ class TransTabClassifier(TransTabModel):
 
         # go through transformers, get the first cls embedding
         encoder_output = self.encoder(**outputs) # bs, seqlen+1, hidden_dim
+
+        encoder_output_np = encoder_output.detach().cpu().numpy()
+        np.save('path/to/save/final_cls_embedding.npy', encoder_output_np)
 
         # classifier
         logits = self.clf(encoder_output)
