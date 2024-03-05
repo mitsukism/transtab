@@ -15,7 +15,6 @@ import numpy as np
 import pandas as pd
 
 import constants
-import numpy as np
 
 class TransTabWordEmbedding(nn.Module):
     r'''
@@ -1002,13 +1001,15 @@ class TransTabClassifier(TransTabModel):
 
         # go through transformers, get the first cls embedding
         encoder_output = self.encoder(**outputs) # bs, seqlen+1, hidden_dim
-
+        """
         encoder_output_np = encoder_output.detach().cpu().numpy()
         np.save('./final_cls_embedding.npy', encoder_output_np)
-        breakpoint()
+        """
 
         # classifier
         logits = self.clf(encoder_output)
+        logger.info(f'encoder_output : {encoder_output}')
+        logger.info(f'logits : {logits}')
 
         if y is not None:
             # compute classification loss

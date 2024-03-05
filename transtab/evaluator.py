@@ -2,6 +2,7 @@ from collections import defaultdict
 import os
 import pdb
 
+from loguru import logger
 import torch
 import numpy as np
 from sklearn.metrics import roc_auc_score, accuracy_score, mean_squared_error
@@ -49,6 +50,8 @@ def predict(clf,
         bs_y_test = y_test.iloc[i:i+eval_batch_size]
         with torch.no_grad():
             logits, loss = clf(bs_x_test, bs_y_test)
+            logger.info(f'logits: {logits}')
+
         
         if loss is not None:
             loss_list.append(loss.item())
