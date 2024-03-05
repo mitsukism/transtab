@@ -1004,7 +1004,8 @@ class TransTabClassifier(TransTabModel):
         encoder_output = self.encoder(**outputs) # bs, seqlen+1, hidden_dim
 
         encoder_output_np = encoder_output.detach().cpu().numpy()
-        np.save('path/to/save/final_cls_embedding.npy', encoder_output_np)
+        np.save('./final_cls_embedding.npy', encoder_output_np)
+        breakpoint()
 
         # classifier
         logits = self.clf(encoder_output)
