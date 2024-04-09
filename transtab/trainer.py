@@ -93,7 +93,7 @@ class Trainer:
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
         self.optimizer = None
-        self.lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
+        self.lr_scheduler = None
         self.balance_sample = balance_sample
         self.load_best_at_last = load_best_at_last
 
@@ -104,6 +104,7 @@ class Trainer:
             num_train_steps = args['num_training_steps']
             logger.info(f'set warmup training in initial {num_train_steps} steps')
             self.create_scheduler(num_train_steps, self.optimizer)
+            self.lr_scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=args['num_epoch'], gamma=0.5)
 
         start_time = time.time()
         for epoch in trange(args['num_epoch'], desc='Epoch'):
@@ -115,6 +116,7 @@ class Trainer:
                     logits, loss = self.model(data[0], data[1])
                     loss.backward()
                     self.optimizer.step()
+                    self.lr_scheduler.step()
                     train_loss_all += loss.item()
                     ite += 1
                     if self.lr_scheduler is not None:
