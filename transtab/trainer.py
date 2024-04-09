@@ -104,7 +104,6 @@ class Trainer:
             num_train_steps = args['num_training_steps']
             logger.info(f'set warmup training in initial {num_train_steps} steps')
             self.create_scheduler(num_train_steps, self.optimizer)
-            self.lr_scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=args['num_epoch'], gamma=0.5)
 
         start_time = time.time()
         for epoch in trange(args['num_epoch'], desc='Epoch'):
