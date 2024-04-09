@@ -1008,8 +1008,8 @@ class TransTabClassifier(TransTabModel):
 
         # classifier
         logits = self.clf(encoder_output)
-        logger.info(f'encoder_output : {encoder_output}')
-        logger.info(f'logits : {logits}')
+        # logger.info(f'encoder_output : {encoder_output}')
+        # logger.info(f'logits : {logits}')
 
         if y is not None:
             # compute classification loss
