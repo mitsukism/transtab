@@ -93,7 +93,7 @@ class Trainer:
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
         self.optimizer = None
-        self.lr_scheduler = None
+        self.lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
         self.balance_sample = balance_sample
         self.load_best_at_last = load_best_at_last
 
