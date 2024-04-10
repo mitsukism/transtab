@@ -41,7 +41,6 @@ class Trainer:
         eval_metric='auc',
         eval_less_is_better=False,
         num_workers=0,
-        lr_scheduler=None,
         **kwargs,
         ):
         '''args:
@@ -89,7 +88,6 @@ class Trainer:
             'num_training_steps': self.get_num_train_steps(train_set_list, num_epoch, batch_size),
             'eval_metric': get_eval_metric_fn(eval_metric),
             'eval_metric_name': eval_metric,
-            'lr_scheduler': lr_scheduler,
             }
         self.args['steps_per_epoch'] = int(self.args['num_training_steps'] / (num_epoch*len(self.train_set_list)))
         if not os.path.exists(output_dir):
@@ -105,7 +103,7 @@ class Trainer:
         if args['warmup_ratio'] is not None or args['warmup_steps'] is not None:
             num_train_steps = args['num_training_steps']
             logger.info(f'set warmup training in initial {num_train_steps} steps')
-            self.create_scheduler(self.args['lr_scheduler'], num_train_steps, self.optimizer)
+            self.create_scheduler(num_train_steps, self.optimizer)
 
         start_time = time.time()
         for epoch in trange(args['num_epoch'], desc='Epoch'):
