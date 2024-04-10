@@ -277,10 +277,9 @@ class Trainer:
             ]
             self.optimizer = torch.optim.Adam(optimizer_grouped_parameters, lr=self.args['lr'])
 
-    def create_scheduler(self, lr_scheduler, num_training_steps, optimizer):
-        name = lr_scheduler
+    def create_scheduler(self, num_training_steps, optimizer):
         self.lr_scheduler = get_scheduler(
-            name,
+            'cosine',
             optimizer = optimizer,
             num_warmup_steps=self.get_warmup_steps(num_training_steps),
             num_training_steps=num_training_steps,
