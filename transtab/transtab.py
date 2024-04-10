@@ -477,6 +477,7 @@ def train(model,
         'load_best_at_last':load_best_at_last,
         'ignore_duplicate_cols':ignore_duplicate_cols,
         'eval_less_is_better':eval_less_is_better,
+        'lr_scheduler': lr_scheduler,
     }
     trainer = Trainer(
         model,
