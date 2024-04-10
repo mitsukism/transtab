@@ -388,6 +388,7 @@ def train(model,
     load_best_at_last=True,
     ignore_duplicate_cols=False,
     eval_less_is_better=False,
+    lr_scheduler='constant',
     **kwargs,
     ):
     '''
